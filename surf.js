@@ -165,6 +165,11 @@ const createAndAttachChart = (buoy, datasets) => {
     options: {
       scales: {
         x: {
+          ticks: {
+            font: {
+              size: 14
+            }
+          },
           type: 'time',
           time: {
             unit: 'hour',
@@ -176,6 +181,11 @@ const createAndAttachChart = (buoy, datasets) => {
           },
         },
         y: {
+          ticks: {
+            font: {
+              size: 14
+            }
+          },
           beginAtZero: true,
           ticks: {
             callback: (value, _index, _values) => `${value}ft`,
