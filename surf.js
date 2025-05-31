@@ -6,21 +6,22 @@ $(document).ready(() => {
 window.surfJsLoaded = true;
 
 const addBuoyForecastImages = () => {
-  $('#pointBuoy').attr(
+  
+  $('#montereyBuoy1').attr(
     'src',
-    `https://wsrv.nl?url=stormsurf.com/4cast/graphics/gfswave.46269.bull.4.png?disable_cache=${Date.now()}`
+    `https://wsrv.nl?url=stormsurf.com/4cast/graphics/gfswave.46042.bull.4.png?disable_cache=${Date.now()}`
   );
-  $('#eastBuoy2').attr(
+  $('#montereyBuoy2').attr(
     'src',
-    `https://wsrv.nl?url=stormsurf.com/4cast/graphics/gfswave.46053.bull.5.png?disable_cache=${Date.now()}`
+    `https://wsrv.nl?url=stormsurf.com/4cast/graphics/gfswave.46042.bull.5.png?disable_cache=${Date.now()}`
   );
-  $('#westBuoy1').attr(
+  $('#halfmoonBuoy1').attr(
     'src',
-    `https://wsrv.nl?url=stormsurf.com/4cast/graphics/gfswave.46054.bull.4.png?disable_cache=${Date.now()}`
+    `https://wsrv.nl?url=stormsurf.com/4cast/graphics/gfswave.46012.bull.4.png?disable_cache=${Date.now()}`
   );
-  $('#santaMonicaBuoy1').attr(
+  $('#halfmoonBuoy2').attr(
     'src',
-    `https://wsrv.nl?url=stormsurf.com/4cast/graphics/gfswave.46025.bull.4.png?disable_cache=${Date.now()}`
+    `https://wsrv.nl?url=stormsurf.com/4cast/graphics/gfswave.46012.bull.5.png?disable_cache=${Date.now()}`
   );
 };
 
@@ -35,12 +36,15 @@ const fetchBuoyData = async (buoyUuid) => {
 
 const generateLiveBuoyCharts = async () => {
   const buoys = [
-    { id: '46251', uuid: 'c795cab8-cecc-11eb-84e7-024238d3b313', displayName: 'Santa Cruz Basin' },
-    { id: '46054', uuid: '56d24394-cecc-11eb-ab23-024238d3b313', displayName: 'West Santa Barbara' },
-    { id: '46218', uuid: 'c795cab8-cecc-11eb-84e7-024238d3b313', displayName: 'Harvest' },
-    { id: '46006', uuid: 'a03ee0b8-cecd-11eb-834b-024238d3b313', displayName: 'Southeast Papa - NorCal Open Ocean' },
-    { id: '46025', uuid: '1b3c155c-cecc-11eb-bbec-024238d3b313', displayName: 'Santa Monica Basin - LA' },
-    { id: '46086', uuid: '62dfcbfe-cecc-11eb-a7ce-024238d3b313', displayName: 'San Clemente Basin - OC' },
+    { id: '46214', uuid: '623f2558-cecd-11eb-8ee7-024238d3b313', displayName: 'Point Reyes' },
+    { id: '46239', uuid: '8f74b3c0-cecc-11eb-ad35-024238d3b313', displayName: 'Point Sur'},
+    { id: '46236', uuid: 'a7560458-df9d-11ef-ac15-029daffad6a3', displayName: 'Monterey Canyon Outer'},
+    { id: '46028', uuid: '48a1002e-cecd-11eb-ba0e-024238d3b313', displayName: 'Cape San Martin'},
+    { id: '46284', uuid: '3072ff0a-b656-11ef-94ee-066f3c48800f', displayName: 'Soquel Cove South'},
+    { id: '46240', uuid: 'a3336676-cecd-11eb-9a27-024238d3b313', displayName: 'Cabrillo Point'},
+    { id: '46042', uuid: 'dcfce512-cecb-11eb-b0c8-024238d3b313', displayName: 'Monterey'},
+    { id: '46012', uuid: '780b2a02-cecb-11eb-9ccc-024238d3b313', displayName: 'Half Moon Bay'},
+    { id: '46269', uuid: 'a011a1e4-cecb-11eb-abf8-024238d3b313', displayName: 'Point Santa Cruz'},
   ];
   buoys.forEach(async (buoy) => {
     const buoyData = await fetchBuoyData(buoy.uuid);

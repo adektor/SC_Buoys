@@ -114,62 +114,100 @@
     <script src="surf.js"></script>
 </head>
 <body>
-  <div class='container'>
+<div class="container mt-4">
 
-    <!-- Wind Forecast -->
-    <h4 class='wind-header'> </h4>
-    <div class='row'>
-      <div class='col-12'>
-        <div class='chart-container'>
-          <iframe 
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" id="surfTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="live-tab" data-toggle="tab" data-target="#live" type="button" role="tab" aria-controls="live" aria-selected="true">
+        Live Conditions
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="forecast-tab" data-toggle="tab" data-target="#forecast" type="button" role="tab" aria-controls="forecast" aria-selected="false">
+        Forecast
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" id="surfTabsContent" style="margin-top: 20px;">
+    <!-- Live Conditions Tab -->
+    <div class="tab-pane fade show active" id="live" role="tabpanel" aria-labelledby="live-tab">
+      
+      <!-- Live Buoys -->
+      <h4 class='buoy-header'>Buoys</h4>
+      <div class='row'>
+        <div class='col-md-6 chart-container'>
+          <div class='chart-wrapper'>
+            <canvas id='buoyChart-46214' height='200'></canvas>
+            <ul id='latestSwellReadings-46214'></ul>
+          </div>
+        </div>
+        <div class='col-md-6 chart-container'>
+          <div class='chart-wrapper'>
+            <canvas id='buoyChart-46239' height='200'></canvas>
+            <ul id='latestSwellReadings-46239'></ul>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6 chart-container'>
+          <div class='chart-wrapper'>
+            <canvas id='buoyChart-46236' height='200'></canvas>
+            <ul id='latestSwellReadings-46236'></ul>
+          </div>
+        </div>
+        <div class='col-md-6 chart-container'>
+          <div class='chart-wrapper'>
+            <canvas id='buoyChart-46028' height='200'></canvas>
+            <ul id='latestSwellReadings-46028'></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Windy -->
+      <h4 class='wind-header'>Wind</h4>
+      <div class='chart-container mb-4 text-center'>
+        <iframe 
           height='400' 
           width='400'
-          src='https://embed.windy.com/embed2.html?lat=36.831&lon=-122.114&detailLat=36.831&detailLon=-122.114&width=750&height=600&zoom=10&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1' 
+          src='https://embed.windy.com/embed2.html?lat=37.007&lon=-122.151&detailLat=37.007&detailLon=-122.151&width=750&height=600&zoom=10&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1' 
           frameborder='0'>
-          </iframe>
-        </div>
+        </iframe>
       </div>
-    </div>
 
-    <!-- Tide Chart -->
-    <h4 class='tides-header'> </h4>
-    <div class='row'>
-      <div class='col-sm-12'>
-        <div class='chart-container'>
-          <script src="https://www.tidespro.com/scripts/146a2908f133493aac282c5159dfbcb5/tidechart/us/california/santa-cruz-monterey-bay"></script>
-        </div>
+      <!-- Tide Chart -->
+      <h4 class='tides-header'>Tides</h4>
+      <div class='chart-container mb-4'>
+        <script src="https://www.tidespro.com/scripts/146a2908f133493aac282c5159dfbcb5/tidechart/us/california/santa-cruz-monterey-bay"></script>
       </div>
-    </div>
 
-
-    <h4 class='buoy-header'>Live Buoys</h4>
-    <div class='row'>
-      <div class='col-md-6 chart-container'>
-        <div class='chart-wrapper'>
-          <canvas id='buoyChart-46251' height='1' width='1'></canvas>
-          <ul id='latestSwellReadings-46251'></ul>
-        </div>
-      </div>
-      <div class='col-md-6 chart-container'>
-        <div class='chart-wrapper'>
-          <canvas id='buoyChart-46054' height='1' width='1'></canvas>
-          <ul id='latestSwellReadings-46054'></ul>
-        </div>
-      </div>
-      <!-- <hr/> -->
-    </div>
     
-
-    <!-- Forecast Buoys (Hidden for Now) -->
-    <div class="hidden">
-      <h4 class='forecast-header'>Forecast Buoy Charts</h4>
-      <div class='row buoy-forecast'>
-        <div class='col-md-6 chart-container'><img src='https://www.stormsurfing.com/cgi/display_alt.cgi?a=cdaspm5' alt='Stormsurf Forecast'></div>
-        <div class='col-md-6 chart-container'><img src='https://www.stormsurfing.com/cgi/display_alt.cgi?a=cdas2' alt='Stormsurf Forecast 2'></div>
-      </div>
     </div>
 
+    <!-- Forecast Tab -->
+    <div class="tab-pane fade" id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
+      <h4 class='forecast-header'>Buoy Forecasts</h4>
+      <div class='chart-container mb-4'>
+        <h6>Half Moon Bay</h6>
+        <img id='halfmoonBuoy1'>
+        <img id='halfmoonBuoy2' style='margin-top: 20px'>
+      </div>
+
+      <div class='chart-container mb-4'>
+        <h6>Monterey Bay</h6>
+        <img id='montereyBuoy1'>
+        <img id='montereyBuoy2' style='margin-top: 20px'>
+      </div>
+
+      <div class='chart-container'>
+        <img src='https://cdip.ucsd.edu/themes/media/images/plots/buoy_ww3.gd?stn=157&tz=UTC&units=standard' alt="Wave Forecast">
+      </div>
+    </div>
   </div>
+
+</div>
 
 </body>
 </html>
