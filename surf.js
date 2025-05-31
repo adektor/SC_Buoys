@@ -33,30 +33,62 @@ const addBuoyForecastImages = () => {
 };
 
 const buoys = [
-  {id: 'b1', name: 'Point Reyes', lat: 37.94, lng: -123.46},
-  {id: 'b2', name: 'Point Sur', lat: 36.34, lng: -122.1},
-  {id: 'b3', name: 'Monterey Canyon Outer', lat: 36.76, lng: -121.95},
-  {id: 'b4', name: 'Cape San Martin', lat: 35.77, lng: -121.9},
-  {id: 'b5', name: 'Monterey', lat: 36.79, lng: -122.4},
-  {id: 'b6', name: 'Half Moon Bay', lat: 37.36, lng: -122.88}
-];
+    { Name: 'Point Reyes', lat: 37.94, lng: -123.46, id: '46214', uuid: '623f2558-cecd-11eb-8ee7-024238d3b313'},
+    { Name: 'Point Sur', lat: 36.34, lng: -122.1, id: '46239', uuid: '8f74b3c0-cecc-11eb-ad35-024238d3b313'},
+    { Name: 'Monterey Canyon Outer', lat: 36.76, lng: -121.95, id: '46236', uuid: 'a7560458-df9d-11ef-ac15-029daffad6a3'},
+    { Name: 'Cape San Martin', lat: 35.77, lng: -121.9, id: '46028', uuid: '48a1002e-cecd-11eb-ba0e-024238d3b313'},
+    // { Name: 'Soquel Cove South', lat: 36.93, lng: -121.93, id: '46284', uuid: '3072ff0a-b656-11ef-94ee-066f3c48800f'},
+    { Name: 'Cabrillo Point', lat: 36.63, lng: -121.91, id: '46240', uuid: 'a3336676-cecd-11eb-9a27-024238d3b313'},
+    // { Name: 'Monterey', lat: 36.79, lng: -122.4, id: '46042', uuid: 'dcfce512-cecb-11eb-b0c8-024238d3b313'},
+    // { Name: 'Half Moon Bay', lat: 37.36, lng: -122.88, id: '46012', uuid: '780b2a02-cecb-11eb-9ccc-024238d3b313'},
+    // { Name: 'Point Santa Cruz', lat: 36.93, lng: -122.03, id: '46269', uuid: 'a011a1e4-cecb-11eb-abf8-024238d3b313'},
+  ];
 
 let map; 
 
 const initializeLeafletMap = () => {
-  map = L.map('map', {center:[36.8, -122.2], zoom:7});
+  map = L.map('map', { center: [36.8, -122.2], zoom: 7 });
+
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  // Add a marker for each buoy
+  let pointReyesMarker = null;
+  let pointReyesId = null;
+
   buoys.forEach(buoy => {
     const marker = L.marker([buoy.lat, buoy.lng]).addTo(map)
-      .bindPopup(`<b>${buoy.name}</b>`);
+      .bindPopup(`<b>${buoy.Name}</b>`);
+
+    if (buoy.Name.toLowerCase().includes('point reyes')) {
+      pointReyesMarker = marker;
+      pointReyesId = buoy.id;
+    }
+
+    marker.on('click', () => {
+      showBuoyChart(buoy.id);
+    });
   });
+
+  // Open popup and draw chart for Point Reyes initially
+  if (pointReyesMarker && pointReyesId) {
+    pointReyesMarker.openPopup();
+
+    const cached = window.buoyDataCache[pointReyesId];
+    if (cached) {
+      drawMapChart(cached); // <- draw chart for Point Reyes on load
+    }
+  }
 };
 
+function showBuoyChart(buoyId) {
+  // Hide all buoy containers
+  $('[id^=buoy-]').hide();
+
+  // Show only the selected buoy
+  $(`#buoy-${buoyId}`).show();
+}
 
 const fetchBuoyData = async (buoyUuid) => {
   let days = 2;
@@ -67,22 +99,14 @@ const fetchBuoyData = async (buoyUuid) => {
   return jsonResponse.data;
 };
 
+
 const generateLiveBuoyCharts = async () => {
-  const buoys = [
-    { id: '46214', uuid: '623f2558-cecd-11eb-8ee7-024238d3b313', displayName: 'Point Reyes' },
-    { id: '46239', uuid: '8f74b3c0-cecc-11eb-ad35-024238d3b313', displayName: 'Point Sur'},
-    { id: '46236', uuid: 'a7560458-df9d-11ef-ac15-029daffad6a3', displayName: 'Monterey Canyon Outer'},
-    { id: '46028', uuid: '48a1002e-cecd-11eb-ba0e-024238d3b313', displayName: 'Cape San Martin'},
-    { id: '46284', uuid: '3072ff0a-b656-11ef-94ee-066f3c48800f', displayName: 'Soquel Cove South'},
-    { id: '46240', uuid: 'a3336676-cecd-11eb-9a27-024238d3b313', displayName: 'Cabrillo Point'},
-    { id: '46042', uuid: 'dcfce512-cecb-11eb-b0c8-024238d3b313', displayName: 'Monterey'},
-    { id: '46012', uuid: '780b2a02-cecb-11eb-9ccc-024238d3b313', displayName: 'Half Moon Bay'},
-    { id: '46269', uuid: 'a011a1e4-cecb-11eb-abf8-024238d3b313', displayName: 'Point Santa Cruz'},
-  ];
-  buoys.forEach(async (buoy) => {
+
+  for (const buoy of buoys) {
     const buoyData = await fetchBuoyData(buoy.uuid);
-    createLiveBuoyChart(buoy, buoyData);
-  });
+    createLiveBuoyChart(buoy, buoyData); 
+  }
+
 };
 
 const createLiveBuoyChart = (buoy, buoyData) => {
@@ -153,7 +177,7 @@ const createLiveBuoyChart = (buoy, buoyData) => {
   swellDatasets.map((dataset) => {
     const minDir = Math.min(...dataset.data.map((swell) => swell.direction));
     const maxDir = Math.max(...dataset.data.map((swell) => swell.direction));
-    dataset.label = `${periodToSwellType(dataset.data[0].period).displayName} | ${degreeToCompass(
+    dataset.label = `${periodToSwellType(dataset.data[0].period).Name} | ${degreeToCompass(
       minDir
     )} (${minDir}°) - ${degreeToCompass(maxDir)} (${maxDir}°)`;
     dates.forEach((date, index) => {
@@ -232,7 +256,7 @@ const createAndAttachChart = (buoy, datasets) => {
       plugins: {
         title: {
           display: true,
-          text: `${buoy.displayName} (${buoy.id})`,
+          text: `${buoy.Name} (${buoy.id})`,
           font: {
             size: 16,
           },
@@ -265,15 +289,15 @@ const createAndAttachChart = (buoy, datasets) => {
 
 const periodToSwellType = (period) => {
   if (period <= 6) {
-    return { key: 'spws', displayName: 'Short Period Windswell', color: '#0000ff' };
+    return { key: 'spws', Name: 'Short Period Windswell', color: '#0000ff' };
   } else if (period <= 9) {
-    return { key: 'ws', displayName: 'Windswell', color: '#00b7ff' };
+    return { key: 'ws', Name: 'Windswell', color: '#00b7ff' };
   } else if (period <= 12) {
-    return { key: 'mps', displayName: 'Mid Period Swell', color: '#ffca00' };
+    return { key: 'mps', Name: 'Mid Period Swell', color: '#ffca00' };
   } else if (period <= 17) {
-    return { key: 'gs', displayName: 'Groundswell', color: '#ff8223' };
+    return { key: 'gs', Name: 'Groundswell', color: '#ff8223' };
   } else {
-    return { key: 'lpgs', displayName: 'Long Period Groundswell', color: '#e60000' };
+    return { key: 'lpgs', Name: 'Long Period Groundswell', color: '#e60000' };
   }
 };
 
