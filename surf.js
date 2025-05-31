@@ -1,8 +1,15 @@
 $(document).ready(() => {
   addBuoyForecastImages();
   generateLiveBuoyCharts();
-});
+  initializeLeafletMap();
 
+  // Listen for when the Map tab is shown
+  $('a[data-toggle="tab"][href="#map"]').on('shown.bs.tab', function (e) {
+    if (map) {
+      map.invalidateSize();
+    }
+  });
+});
 window.surfJsLoaded = true;
 
 const addBuoyForecastImages = () => {
@@ -24,6 +31,32 @@ const addBuoyForecastImages = () => {
     `https://wsrv.nl?url=stormsurf.com/4cast/graphics/gfswave.46012.bull.5.png?disable_cache=${Date.now()}`
   );
 };
+
+const buoys = [
+  {id: 'b1', name: 'Point Reyes', lat: 37.94, lng: -123.46},
+  {id: 'b2', name: 'Point Sur', lat: 36.34, lng: -122.1},
+  {id: 'b3', name: 'Monterey Canyon Outer', lat: 36.76, lng: -121.95},
+  {id: 'b4', name: 'Cape San Martin', lat: 35.77, lng: -121.9},
+  {id: 'b5', name: 'Monterey', lat: 36.79, lng: -122.4},
+  {id: 'b6', name: 'Half Moon Bay', lat: 37.36, lng: -122.88}
+];
+
+let map; 
+
+const initializeLeafletMap = () => {
+  map = L.map('map', {center:[36.8, -122.2], zoom:7});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Add a marker for each buoy
+  buoys.forEach(buoy => {
+    const marker = L.marker([buoy.lat, buoy.lng]).addTo(map)
+      .bindPopup(`<b>${buoy.name}</b>`);
+  });
+};
+
 
 const fetchBuoyData = async (buoyUuid) => {
   let days = 2;
@@ -150,7 +183,7 @@ const createAndAttachLatestSwellReadings = (buoy, dates, swellDatasets, waterTem
   });
   $(`#latestSwellReadings-${buoy.id}`).append(`
     <li class='water-temp'>
-      <img class='waterdrop' src='https://jeremykirc.github.io/surf/waterdrop.png'></img>
+      <img class='waterdrop' src='https://adektor.github.io/SC_Buoys/waterdrop.png'></img>
       <span>${waterTemp}°</span>
     </li>
   `);

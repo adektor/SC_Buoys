@@ -3,7 +3,7 @@
   <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-    <link rel='icon' type='image/jpg' href='https://jeremykirc.github.io/surf/wave_favicon.png'>
+    <link rel='icon' type='image/jpg' href='https://adektor.github.io/SC_Buoys/wave_favicon.png'>
 
     <!-- Bootstrap CSS -->
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
@@ -101,6 +101,12 @@
           width: 100%;
         }
       }
+      
+      .my-leaflet-map-container img {
+      max-height: none;
+      }
+      #map { height: 600px; 
+             width: 40%;}
     </style>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -112,23 +118,33 @@
     
     <!-- load local js file -->
     <script src="surf.js"></script>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
 </head>
+
 <body>
 <div class="container mt-4">
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" id="surfTabs" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="live-tab" data-toggle="tab" data-target="#live" type="button" role="tab" aria-controls="live" aria-selected="true">
-        Live Conditions
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="forecast-tab" data-toggle="tab" data-target="#forecast" type="button" role="tab" aria-controls="forecast" aria-selected="false">
-        Forecast
-      </button>
-    </li>
-  </ul>
+    <ul class="nav nav-tabs" id="surfTabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="live-tab" data-toggle="tab" href="#live" role="tab" aria-controls="live" aria-selected="true">Live Conditions</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="forecast-tab" data-toggle="tab" href="#forecast" role="tab" aria-controls="forecast" aria-selected="false">Forecast</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="false">Map</a>
+      </li>
+    </ul>
 
   <!-- Tab panes -->
   <div class="tab-content" id="surfTabsContent" style="margin-top: 20px;">
@@ -188,7 +204,7 @@
 
     <!-- Forecast Tab -->
     <div class="tab-pane fade" id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
-      <h4 class='forecast-header'>Buoy Forecasts</h4>
+      <h4 class='forecast-header'>Buoys</h4>
       <div class='chart-container mb-4'>
         <h6>Half Moon Bay</h6>
         <img id='halfmoonBuoy1'>
@@ -205,9 +221,25 @@
         <img src='https://cdip.ucsd.edu/themes/media/images/plots/buoy_ww3.gd?stn=157&tz=UTC&units=standard' alt="Wave Forecast">
       </div>
     </div>
+
+    <div class="tab-pane fade" id="map" role="tabpanel" aria-labelledby="map-tab">
+      <div class="d-flex flex-row flex-wrap">
+        
+        <!-- Leaflet Map -->
+        <div id="map" style="height: 400px; width: 40%;"></div>
+
+        <!-- Buoy Chart Panel -->
+        <div id="map-buoy-chart" class="chart-container ml-4" style="width: 55%;">
+          <h5 id="map-chart-title" class="text-center"></h5>
+          <canvas id="map-buoy-canvas" height="350"></canvas>
+          <ul id="map-latest-swell-readings"></ul>
+        </div>
+
+      </div>
+    </div>
+    
   </div>
 
 </div>
-
 </body>
 </html>
