@@ -137,7 +137,10 @@
         <div class="tab-pane fade show active" id="buoys" role="tabpanel">
           <div class="d-flex flex-row flex-wrap">
 
-            <div id="buoy-46214" class="chart-container" style="display: block; flex: 1 45%; max-width: 600px;">
+            <!-- Map -->
+            <div id="map" style="flex: 1 1 50%; height: 780px; min-width: 300px; margin-right: 20px; margin-top: 0px;"></div>
+
+            <div id="buoy-46214" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
               <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
                 <div class="chart-wrapper">
                   <canvas id="buoyChart-46214" height="350"></canvas>
@@ -146,7 +149,7 @@
               </div>
             </div>
 
-            <div id="buoy-46239" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
+            <div id="buoy-46239" class="chart-container" style="display: block; flex: 1 45%; max-width: 600px;">
               <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
                 <div class="chart-wrapper">
                   <canvas id="buoyChart-46239" height="350"></canvas>
@@ -218,8 +221,6 @@
               </div>
             </div>
 
-            <!-- Map -->
-            <div id="map" style="flex: 1 1 50%; height: 800px; min-width: 300px; margin-left: 20px; margin-top: 0px;"></div>
           </div>
 
         <!-- Forecast -->

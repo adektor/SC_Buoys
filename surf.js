@@ -47,7 +47,7 @@ const buoys = [
 let map; 
 
 const initializeLeafletMap = () => {
-  map = L.map('map', { center: [36.8, -122.2], zoom: 7 });
+  map = L.map('map', { center: [36.9, -122.5], zoom: 7.5 });
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
@@ -61,7 +61,7 @@ const initializeLeafletMap = () => {
     const marker = L.marker([buoy.lat, buoy.lng]).addTo(map)
       .bindPopup(`<b>${buoy.Name}</b>`);
 
-    if (buoy.Name.toLowerCase().includes('point reyes')) {
+    if (buoy.Name.toLowerCase().includes('point sur')) {
       pointReyesMarker = marker;
       pointReyesId = buoy.id;
     }
@@ -113,22 +113,32 @@ const createLiveBuoyChart = (buoy, buoyData) => {
   const combinedHeightDataset = {
     data: [],
     label: 'Combined Height',
+    group: 'Combined Height',
     borderColor: '#5b5b5b',
     backgroundColor: '#5b5b5b',
-    borderWidth: 5,
+    borderWidth: 3,
     pointRadius: 0,
     tension: 0.5,
   };
   let swellDatasets = {};
   const dates = [];
   const waterTemps = [];
+
+  const swellStyleByType = {
+      'Short Period Windswell'  : { borderWidth: .5, pointRadius: .5 },
+      'Windswell'               : { borderWidth: 1, pointRadius: 1 },
+      'Mid Period Swell'        : { borderWidth: 1.5, pointRadius: 1.5 },
+      'Groundswell'             : { borderWidth: 2, pointRadius: 2 },
+      'Long Period Groundswell' : { borderWidth: 2.5, pointRadius: 2.5 },
+    };
+    
   buoyData.forEach((datapoint) => {
     const date = new Date(datapoint.timestamp * 1000);
     // There is often duplicate data at 40 and 50 minute marks, so only use one.
     if (date.getMinutes() === 40) return;
 
     dates.push(date);
-    if (datapoint.waterTemperature) waterTemps.push(datapoint.waterTemperature);
+    waterTemps.push(datapoint.waterTemperature == null ? '--' : datapoint.waterTemperature);
     // Add a data point for the combined height.
     combinedHeightDataset.data.push({
       x: date,
@@ -154,13 +164,17 @@ const createLiveBuoyChart = (buoy, buoyData) => {
       }
 
       // Create a new dataset for the swell type if it doesn't already exist.
+      const swellStyle = swellStyleByType[swellType.Name] || { borderWidth: 2, pointRadius: 2 };
       if (!swellDatasets[key]) {
         swellDatasets[key] = {
           data: [],
           borderColor: swellType.color,
           backgroundColor: swellType.color,
           tension: 0.5,
-          spanGaps: false,
+          spanGaps: true,
+          group: swellType.Name,
+          borderWidth: swellStyle.borderWidth,
+          pointRadius: swellStyle.pointRadius,
         };
       }
 
@@ -186,6 +200,21 @@ const createLiveBuoyChart = (buoy, buoyData) => {
     });
     return dataset;
   });
+
+  const swellTypeOrder = [
+    'Short Period Windswell',
+    'Windswell',
+    'Mid Period Swell',
+    'Groundswell',
+    'Long Period Groundswell',
+    'Long Period Groundswell',
+  ];
+
+  console.log('Groups in swellDatasets:', swellDatasets.map(d => d.group));
+  swellDatasets.sort((a, b) => {
+    return swellTypeOrder.indexOf(a.group) - swellTypeOrder.indexOf(b.group);
+  });
+
   createAndAttachChart(buoy, [combinedHeightDataset, ...swellDatasets]);
   createAndAttachLatestSwellReadings(buoy, dates, swellDatasets, waterTemps[0]);
 };
@@ -259,6 +288,23 @@ const createAndAttachChart = (buoy, datasets) => {
           text: `${buoy.Name} (${buoy.id})`,
           font: {
             size: 16,
+          },
+        },
+        legend: {
+          labels: {
+            generateLabels: (chart) => {
+              const seenGroups = new Set();
+              return chart.data.datasets
+                .filter((ds) => ds.group && !seenGroups.has(ds.group) && seenGroups.add(ds.group))
+                .map((ds, i) => ({
+                  text: ds.group,
+                  fillStyle: ds.backgroundColor,
+                  strokeStyle: ds.borderColor,
+                  lineWidth: ds.borderWidth,
+                  hidden: !chart.isDatasetVisible(i),
+                  datasetIndex: i,
+                }));
+            },
           },
         },
         tooltip: {
