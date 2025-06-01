@@ -295,16 +295,37 @@ const createAndAttachChart = (buoy, datasets) => {
             generateLabels: (chart) => {
               const seenGroups = new Set();
               return chart.data.datasets
-                .filter((ds) => ds.group && !seenGroups.has(ds.group) && seenGroups.add(ds.group))
-                .map((ds, i) => ({
+                .map((ds, index) => ({ ds, index }))
+                .filter(({ ds }) => ds.group && !seenGroups.has(ds.group) && seenGroups.add(ds.group))
+                .map(({ ds, index }) => ({
                   text: ds.group,
                   fillStyle: ds.backgroundColor,
                   strokeStyle: ds.borderColor,
                   lineWidth: ds.borderWidth,
-                  hidden: !chart.isDatasetVisible(i),
-                  datasetIndex: i,
+                  hidden: !chart.isDatasetVisible(index),
+                  datasetIndex: index,
+                  group: ds.group,  // add group info for easy access
                 }));
-            },
+            }
+          },
+          onClick: (e, legendItem, legend) => {
+            const chart = legend.chart;
+            const group = legendItem.group;
+
+            // Find all dataset indices that belong to this group
+            const indices = chart.data.datasets
+              .map((ds, i) => (ds.group === group ? i : -1))
+              .filter(i => i !== -1);
+
+            // Determine if they are all currently visible or not
+            const allVisible = indices.every(i => chart.isDatasetVisible(i));
+
+            // Toggle visibility for all datasets in this group
+            indices.forEach(i => {
+              chart.setDatasetVisibility(i, !allVisible);
+            });
+
+            chart.update();
           },
         },
         tooltip: {
