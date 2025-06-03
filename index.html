@@ -136,7 +136,10 @@
           <a class="nav-link active" id="buoys-tab" data-toggle="tab" href="#buoys" role="tab">Swell</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="windtide-tab" data-toggle="tab" href="#windtide" role="tab">Wind and Tide</a>
+          <a class="nav-link" id="wind-tab" data-toggle="tab" href="#wind" role="tab">Wind</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="tide-tab" data-toggle="tab" href="#tide" role="tab">Tides</a>
         </li>
       </ul>
 
@@ -279,8 +282,8 @@
           </div>
         </div>
 
-        <!-- Wind and Tide -->
-        <div class="tab-pane fade" id="windtide" role="tabpanel">
+        <!-- Wind -->
+        <div class="tab-pane fade" id="wind" role="tabpanel">
           <div class='chart-container mb-4 text-center'>
             <iframe 
               height='720' 
@@ -288,12 +291,14 @@
               frameborder='0'>
             </iframe>
           </div>
+        </div>
 
-          <div class='chart-container mb-4'>
+        <div class="tab-pane fade" id="tide" role="tabpanel">
+          <div class='chart-container mb-4 text-center'>
             <script src="https://www.tidespro.com/scripts/146a2908f133493aac282c5159dfbcb5/tidechart/us/california/santa-cruz-monterey-bay"></script>
           </div>
         </div>
-
+        
       </div>
     </div>
   </body>
