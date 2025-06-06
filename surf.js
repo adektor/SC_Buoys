@@ -50,7 +50,15 @@ const buoys = [
 let map; 
 
 const initializeLeafletMap = () => {
-  map = L.map('map', { center: [35.9, -122.5], zoom: 7.2 });
+  map = L.map('map', { 
+    center: [36, -122.3], 
+    zoom: 7.2,
+    scrollWheelZoom: false,
+    dragging: false,
+    doubleClickZoom: false,
+    boxZoom: false,
+    keyboard: false
+  });
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
