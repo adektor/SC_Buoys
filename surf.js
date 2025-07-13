@@ -2,13 +2,6 @@ $(document).ready(() => {
   addBuoyForecastImages();
   generateLiveBuoyCharts();
   initializeLeafletMap();
-
-  // Listen for when the Map tab is shown
-  $('a[data-toggle="tab"][href="#map"]').on('shown.bs.tab', function (e) {
-    if (map) {
-      map.invalidateSize();
-    }
-  });
 });
 window.surfJsLoaded = true;
 

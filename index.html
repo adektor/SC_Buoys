@@ -130,175 +130,139 @@
 
   <body>
     <div class="container mt-4">
-      <!-- Tabs -->
-      <ul class="nav nav-tabs" id="surfTabs" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" id="buoys-tab" data-toggle="tab" href="#buoys" role="tab">Swell</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="wind-tab" data-toggle="tab" href="#wind" role="tab">Wind</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="tide-tab" data-toggle="tab" href="#tide" role="tab">Tides</a>
-        </li>
-      </ul>
+      <!-- Main Content -->
+      <h4 class='forecast-header'>Live</h4>
+      <div class="d-flex flex-row flex-wrap" style="margin-top: 20px;">
 
-      <!-- Tab Content -->
-      <div class="tab-content mt-3" id="surfTabsContent">
+        <!-- Map -->
+        <div id="map" style="flex: 1 1 50%; height: 760px; min-width: 300px; margin-right: 20px; margin-top: 0px;"></div>
 
-        <!-- Swell -->
-        <div class="tab-pane fade show active" id="buoys" role="tabpanel">
-          <div class="d-flex flex-row flex-wrap">
-
-            <!-- Map -->
-            <div id="map" style="flex: 1 1 50%; height: 760px; min-width: 300px; margin-right: 20px; margin-top: 0px;"></div>
-
-            <div id="buoy-46214" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
-              <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
-                <div class="chart-wrapper">
-                  <canvas id="buoyChart-46214" height="350"></canvas>
-                  <ul id="latestSwellReadings-46214"></ul>
-                </div>
-              </div>
+        <div id="buoy-46214" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
+          <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
+            <div class="chart-wrapper">
+              <canvas id="buoyChart-46214" height="350"></canvas>
+              <ul id="latestSwellReadings-46214"></ul>
             </div>
-
-            <div id="buoy-46239" class="chart-container" style="display: block; flex: 1 45%; max-width: 600px;">
-              <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
-                <div class="chart-wrapper">
-                  <canvas id="buoyChart-46239" height="350"></canvas>
-                  <ul id="latestSwellReadings-46239"></ul>
-                </div>
-              </div>
-            </div>
-
-            <div id="buoy-46236" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
-              <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
-                <div class="chart-wrapper">
-                  <canvas id="buoyChart-46236" height="350"></canvas>
-                  <ul id="latestSwellReadings-46236"></ul>
-                </div>
-              </div>
-            </div>
-
-            <div id="buoy-46028" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
-              <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
-                <div class="chart-wrapper">
-                  <canvas id="buoyChart-46028" height="350"></canvas>
-                  <ul id="latestSwellReadings-46028"></ul>
-                </div>
-              </div>
-            </div>
-
-            <div id="buoy-46284" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
-              <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
-                <div class="chart-wrapper">
-                  <canvas id="buoyChart-46284" height="350"></canvas>
-                  <ul id="latestSwellReadings-46284"></ul>
-                </div>
-              </div>
-            </div>
-
-            <div id="buoy-46240" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
-              <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
-                <div class="chart-wrapper">
-                  <canvas id="buoyChart-46240" height="350"></canvas>
-                  <ul id="latestSwellReadings-46240"></ul>
-                </div>
-              </div>
-            </div>
-
-            <div id="buoy-46042" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
-              <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
-                <div class="chart-wrapper">
-                  <canvas id="buoyChart-46042" height="350"></canvas>
-                  <ul id="latestSwellReadings-46042"></ul>
-                </div>
-              </div>
-            </div>
-
-            <div id="buoy-46012" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
-              <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
-                <div class="chart-wrapper">
-                  <canvas id="buoyChart-46012" height="350"></canvas>
-                  <ul id="latestSwellReadings-46012"></ul>
-                </div>
-              </div>
-            </div>
-
-            <div id="buoy-46269" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
-              <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
-                <div class="chart-wrapper">
-                  <canvas id="buoyChart-46269" height="350"></canvas>
-                  <ul id="latestSwellReadings-46269"></ul>
-                </div>
-              </div>
-            </div>
-
-            <div id="buoy-46218" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
-              <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
-                <div class="chart-wrapper">
-                  <canvas id="buoyChart-46218" height="350"></canvas>
-                  <ul id="latestSwellReadings-46218"></ul>
-                </div>
-              </div>
-            </div>
-
-            <div id="buoy-46259" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
-              <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
-                <div class="chart-wrapper">
-                  <canvas id="buoyChart-46259" height="350"></canvas>
-                  <ul id="latestSwellReadings-46259"></ul>
-                </div>
-              </div>
-            </div>
-
-            <div id="buoy-46215" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
-              <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
-                <div class="chart-wrapper">
-                  <canvas id="buoyChart-46215" height="350"></canvas>
-                  <ul id="latestSwellReadings-46215"></ul>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-        <!-- Forecast -->
-          <h4 class='forecast-header'>Forecast</h4>
-          <div class='chart-container mb-4'>
-            <h6>Half Moon Bay</h6>
-            <img id='halfmoonBuoy1' src='https://www.ndbc.noaa.gov/common_files/buoy2/46012/46012_spec_graph.png'>
-            <img id='halfmoonBuoy2' style='margin-top: 20px' src='https://www.ndbc.noaa.gov/common_files/buoy2/46012/46012_swdir_graph.png'>
-          </div>
-
-          <div class='chart-container mb-4'>
-            <h6>Monterey Bay</h6>
-            <img id='montereyBuoy1' src='https://www.ndbc.noaa.gov/common_files/buoy2/46042/46042_spec_graph.png'>
-            <img id='montereyBuoy2' style='margin-top: 20px' src='https://www.ndbc.noaa.gov/common_files/buoy2/46042/46042_swdir_graph.png'>
-          </div>
-
-          <div class='chart-container'>
-            <img src='https://cdip.ucsd.edu/themes/media/images/plots/buoy_ww3.gd?stn=157&tz=UTC&units=standard' alt="Wave Forecast">
           </div>
         </div>
 
-        <!-- Wind -->
-        <div class="tab-pane fade" id="wind" role="tabpanel">
-          <div class='chart-container mb-4 text-center'>
-            <iframe 
-              height='720' 
-              src='https://embed.windy.com/embed2.html?lat=37.007&lon=-122.151&detailLat=37.007&detailLon=-122.151&width=750&height=600&zoom=10&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1' 
-              frameborder='0'>
-            </iframe>
+        <div id="buoy-46239" class="chart-container" style="display: block; flex: 1 45%; max-width: 600px;">
+          <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
+            <div class="chart-wrapper">
+              <canvas id="buoyChart-46239" height="350"></canvas>
+              <ul id="latestSwellReadings-46239"></ul>
+            </div>
           </div>
         </div>
 
-        <div class="tab-pane fade" id="tide" role="tabpanel">
-          <div class='chart-container mb-4 text-center'>
-            <script src="https://www.tidespro.com/scripts/146a2908f133493aac282c5159dfbcb5/tidechart/us/california/santa-cruz-monterey-bay"></script>
+        <div id="buoy-46236" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
+          <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
+            <div class="chart-wrapper">
+              <canvas id="buoyChart-46236" height="350"></canvas>
+              <ul id="latestSwellReadings-46236"></ul>
+            </div>
           </div>
         </div>
-        
+
+        <div id="buoy-46028" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
+          <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
+            <div class="chart-wrapper">
+              <canvas id="buoyChart-46028" height="350"></canvas>
+              <ul id="latestSwellReadings-46028"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="buoy-46284" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
+          <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
+            <div class="chart-wrapper">
+              <canvas id="buoyChart-46284" height="350"></canvas>
+              <ul id="latestSwellReadings-46284"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="buoy-46240" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
+          <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
+            <div class="chart-wrapper">
+              <canvas id="buoyChart-46240" height="350"></canvas>
+              <ul id="latestSwellReadings-46240"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="buoy-46042" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
+          <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
+            <div class="chart-wrapper">
+              <canvas id="buoyChart-46042" height="350"></canvas>
+              <ul id="latestSwellReadings-46042"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="buoy-46012" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
+          <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
+            <div class="chart-wrapper">
+              <canvas id="buoyChart-46012" height="350"></canvas>
+              <ul id="latestSwellReadings-46012"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="buoy-46269" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
+          <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
+            <div class="chart-wrapper">
+              <canvas id="buoyChart-46269" height="350"></canvas>
+              <ul id="latestSwellReadings-46269"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="buoy-46218" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
+          <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
+            <div class="chart-wrapper">
+              <canvas id="buoyChart-46218" height="350"></canvas>
+              <ul id="latestSwellReadings-46218"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="buoy-46259" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
+          <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
+            <div class="chart-wrapper">
+              <canvas id="buoyChart-46259" height="350"></canvas>
+              <ul id="latestSwellReadings-46259"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="buoy-46215" class="chart-container" style="display: none; flex: 1 45%; max-width: 600px;">
+          <div class="chart-container" style="flex: 1 1 45%; max-width: 600px;">
+            <div class="chart-wrapper">
+              <canvas id="buoyChart-46215" height="350"></canvas>
+              <ul id="latestSwellReadings-46215"></ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Forecast -->
+      <h4 class='forecast-header'>Forecast</h4>
+      <div class='chart-container mb-4' style="margin-top: 20px;">
+        <h6>Half Moon Bay</h6>
+        <img id='halfmoonBuoy1' src='https://www.ndbc.noaa.gov/common_files/buoy2/46012/46012_spec_graph.png'>
+        <img id='halfmoonBuoy2' style='margin-top: 20px' src='https://www.ndbc.noaa.gov/common_files/buoy2/46012/46012_swdir_graph.png'>
+      </div>
+
+      <div class='chart-container mb-4'>
+        <h6>Monterey Bay</h6>
+        <img id='montereyBuoy1' src='https://www.ndbc.noaa.gov/common_files/buoy2/46042/46042_spec_graph.png'>
+        <img id='montereyBuoy2' style='margin-top: 20px' src='https://www.ndbc.noaa.gov/common_files/buoy2/46042/46042_swdir_graph.png'>
+      </div>
+
+      <div class='chart-container'>
+        <img src='https://cdip.ucsd.edu/themes/media/images/plots/buoy_ww3.gd?stn=157&tz=UTC&units=standard' alt="Wave Forecast">
       </div>
     </div>
   </body>
